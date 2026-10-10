@@ -37,12 +37,10 @@ public class Comercio {
     @JoinColumn(name = "operador_id", nullable = false)
     private Usuario operador;
 
-    // 🔽 Relación uno a muchos con Servicio
     @OneToMany(mappedBy = "comercio", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @Builder.Default
     private List<Servicio> servicios = new ArrayList<>();
 
-    // Helper para agregar servicios (mantiene consistencia bidireccional)
     public void addServicio(Servicio servicio) {
         servicios.add(servicio);
         servicio.setComercio(this);
