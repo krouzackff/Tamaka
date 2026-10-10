@@ -24,7 +24,7 @@ public class AuthServImpl implements IAuthService {
     @Override
     public UsuarioResponse registrar(RegistroRequest request) {
         if (usuarioRepository.existsByEmail(request.getEmail())) {
-            throw new BusinessException("El email ya está registrado");
+            throw new RuntimeException("El email ya está registrado");
         }
 
         Set<Usuario.Rol> roles = new HashSet<>();
@@ -43,10 +43,10 @@ public class AuthServImpl implements IAuthService {
     @Override
     public UsuarioResponse login(LoginRequest request) {
         Usuario usuario = usuarioRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new BusinessException("Credenciales inválidas"));
+                .orElseThrow(() -> new RuntimeException("Credenciales inválidas"));
 
         if (!usuario.getPassword().equals(request.getPassword())) {
-            throw new BusinessException("Credenciales inválidas");
+            throw new RuntimeException("Credenciales inválidas");
         }
 
         return usuarioMapper.toResponse(usuario);

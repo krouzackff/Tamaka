@@ -64,6 +64,6 @@ public class ServicioServImpl implements IServicioServ {
     @Override
     public Servicio obtenerEntidad(Long id) {
         return servicioRepository.findById(id)
-                .orElseThrow(() -> new BusinessException("Servicio no encontrado"));
+                .orElseThrow(() -> new RuntimeException("Servicio no encontrado"));
     }
 }

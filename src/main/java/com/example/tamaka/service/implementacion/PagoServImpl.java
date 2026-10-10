@@ -54,7 +54,7 @@ public class PagoServImpl implements IPagoServ {
     @Override
     public PagoResponse obtenerPorReserva(Long reservaId) {
         Pago pago = pagoRepository.findByReservaId(reservaId)
-                .orElseThrow(() -> new Exception("No hay pago para esa reserva"));
+                .orElseThrow(() -> new RuntimeException("No hay pago para esa reserva"));
         return pagoMapper.toResponse(pago);
     }
 }

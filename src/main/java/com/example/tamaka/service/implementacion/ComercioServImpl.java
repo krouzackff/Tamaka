@@ -26,14 +26,14 @@ public class ComercioServImpl implements IComercioServ {
     public ComercioResponse crear(Long operadorId, ComercioRequest request) {
 
         if (request.getRnt() == null || request.getRnt().isBlank()) {
-            throw new BusinessException("El RNT es obligatorio para registrar un comercio");
+            throw new RuntimeException("El RNT es obligatorio para registrar un comercio");
         }
         if (comercioRepository.existsByRnt(request.getRnt())) {
-            throw new BusinessException("Ya existe un comercio con ese RNT");
+            throw new RuntimeException("Ya existe un comercio con ese RNT");
         }
 
         Usuario operador = usuarioRepository.findById(operadorId)
-                .orElseThrow(() -> new BusinessException("Usuario no encontrado"));
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
         if (!operador.getRoles().contains(Usuario.Rol.OPERADOR)) {
             operador.getRoles().add(Usuario.Rol.OPERADOR);
@@ -59,6 +59,6 @@ public class ComercioServImpl implements IComercioServ {
     @Override
     public Comercio obtenerEntidad(Long id) {
         return comercioRepository.findById(id)
-                .orElseThrow(() -> new BusinessException("Comercio no encontrado"));
+                .orElseThrow(() -> new RuntimeException("Comercio no encontrado"));
     }
 }
